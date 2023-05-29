@@ -1,0 +1,144 @@
+version: 2
+
+sources:
+  - name: STG
+    database: PROD_DWH  
+    schema: STAGING_SCHEMA 
+    tables:
+      - name: ORGCALENDAR
+        columns:
+          - name: D_DATE
+            tests:
+              - not_null
+              - unique
+          - name: WEEK
+            tests:
+              - not_null
+          - name: MONTH
+            tests:
+              - not_null  
+          - name: QUARTER
+            tests:
+              - not_null
+          - name: YEAR
+            tests:
+              - not_null      
+      - name: CUSTOMER_TERMS
+        columns:
+          - name: CUSTOMER_ID
+            tests:
+              - not_null
+              - unique
+          - name: TERM_DAYS
+            tests:
+              - not_null
+      - name: CONVERSIONRATE
+        columns:
+          - name: EOM_DATE
+            tests:
+              - not_null
+          - name: TRANSACTION_CURRUNCY
+            tests:
+              - not_null
+          - name: BASE_CURRENCY
+            tests:
+              - not_null
+          - name: CONVERSION_RATE
+            tests:
+              - not_null    
+  - name: CRTD
+    database: PROD_DWH  
+    schema: CURATED_SCHEMA 
+    tables:
+      - name: AR_DETAILS
+        columns:
+          - name: AS_OF_DATE
+            tests:
+              - not_null
+          - name: customerid
+            tests:
+              - not_null
+          - name: customername
+            tests:
+              - not_null  
+          - name: invoicenumber
+            tests:
+              - not_null    
+          - name: INVOICEDATE
+            tests:
+              - not_null 
+          - name: DUEDATE
+            tests:
+              - not_null
+          - name: TRANSACTIONCURRENCY
+            tests:
+              - not_null  
+          - name: TRANSACTIONAMOUNT
+            tests:
+              - not_null    
+          - name: TOTALAR
+            tests:
+              - not_null                       
+      - name: CUSTOMER_MASTER
+        columns:
+          - name: customer_id
+            tests:
+              - unique
+              - not_null
+          - name: CUSTOMER_NAME
+            tests:
+              - not_null 
+          - name: CONTACT_NO
+            tests:
+              - not_null
+          - name: EMAIL_ID
+            tests:
+              - not_null 
+          - name: RM
+            tests:
+              - not_null
+          - name: REGION
+            tests:
+              - not_null 
+          - name: SUB_REGION
+            tests:
+              - not_null
+          - name: COUNTRY
+            tests:
+              - not_null
+          - name: IS_ACTIVE
+            tests:
+              - accepted_values:
+                  values:
+                    - TRUE
+                    - FALSE
+              - not_null                
+      - name: PAYMENT_DETAILS
+        columns:
+          - name: AS_OF_DATE
+            tests:
+              - not_null
+          - name: customerid
+            tests:
+              - not_null
+          - name: customername
+            tests:
+              - not_null  
+          - name: invoicenumber
+            tests:
+              - not_null    
+          - name: INVOICEDATE
+            tests:
+              - not_null 
+          - name: PAYMENTDATE
+            tests:
+              - not_null
+          - name: TRANSACTIONCURRENCY
+            tests:
+              - not_null  
+          - name: TRANSACTIONAMOUNT
+            tests:
+              - not_null    
+          - name: PAYMENTAMOUNT
+            tests:
+              - not_null
