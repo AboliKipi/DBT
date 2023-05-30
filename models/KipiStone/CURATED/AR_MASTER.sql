@@ -1,6 +1,7 @@
 {{ config(materialized="table") }}
 
 with
+--invoice age
     cte_inv_age as (
 
         select *, (as_of_date - invoicedate) as inv_age
@@ -17,12 +18,12 @@ with
         from cte_inv_age a
         left join {{ref('ORGCALENDAR')}} b on invoicedate = d_date
     ),
-
+--partial paid
     cte_partial_paid as (
         select *, iff(totalar < transactionamount, 'Yes', 'No') as partial_paid
         from cte_inv_details
     ),
-    -- select * from cte_partial_paid;
+--Term Days Calc
     cte_term_days as (
         select pd.*, ct.term_days
         from cte_partial_paid pd
@@ -44,7 +45,7 @@ with
         from cte_due_date a
         left join {{ref('ORGCALENDAR')}} b on duedate = d_date
     ),
-
+-- Due Bucket
     cte_due_bucket as (
         select
             *,
@@ -75,6 +76,7 @@ with
         where cd.is_active = true
 
     ),
+-- USD Conversion
     amount_usd as (
         select
             a.*,

@@ -29,7 +29,7 @@ with
         left join {{ref('ORGCALENDAR')}} b on invoicedate = d_date
     ),
 
-    -- select * from cte_partial_paid;
+ -- Term days
     cte_term_days as (
         select pd.*, ct.term_days
         from cte_inv_details pd
@@ -41,7 +41,7 @@ with
         select td.*, iff(inv_age <= term_days, 'Yes', 'No') as before_due
         from cte_term_days td
     ),
-
+-- Adding customer info
     cust as (
         select cdb.*, cd.region, cd.sub_region, cd.country, cd.rm
         from cte_before_due cdb
@@ -50,7 +50,7 @@ with
             on cdb.customerid = cd.customer_id
         where cd.is_active = true
     ),
-
+-- USD Conversion
     amount_usd as (
         select
             a.*,

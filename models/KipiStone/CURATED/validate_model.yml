@@ -1,0 +1,82 @@
+version: 2
+
+models:
+  - name: AR_MASTER
+    columns:
+      - name: invoicedate
+        tests:
+          - not_null
+          - relationships:
+              to: ref('ORGCALENDAR')
+              field: d_date
+      - name: duedate
+        tests:
+          - not_null
+          - relationships:
+              to: ref('ORGCALENDAR')
+              field: d_date
+      - name: partial_paid
+        tests:
+          - accepted_values:
+                  values:
+                    - "Yes"
+                    - "No"
+          - not_null   
+      - name: customerid
+        tests:
+          - not_null
+          - relationships:
+              to: ref('CUSTOMER_TERMS')
+              field: customer_id
+      - name: transactioncurrency
+        tests:
+          - not_null
+          - relationships:
+              to: ref('CONVERSIONRATE')
+              field: transaction_curruncy
+      - name: due_bucket
+        tests:
+          - accepted_values:
+                  values:
+                    - "CURRENT"
+                    - "1-30 Days"
+                    - "31-60 Days"
+                    - "61-90 Days"
+                    - "1-30 Days"
+                    - "91-180 Days"
+                    - "181-360 Days"
+                    - "360+ Days"
+          - not_null       
+  - name: PAYMENT_MASTER
+    columns:
+      - name: before_due
+        tests:
+          - accepted_values:
+                  values:
+                    - "Yes"
+                    - "No"
+          - not_null  
+      - name: customerid
+        tests:
+          - not_null
+          - relationships:
+              to: ref('CUSTOMER_TERMS')
+              field: customer_id
+      - name: transactioncurrency
+        tests:
+          - not_null
+          - relationships:
+              to: ref('CONVERSIONRATE')
+              field: transaction_curruncy
+      - name: invoicedate
+        tests:
+          - not_null
+          - relationships:
+              to: ref('ORGCALENDAR')
+              field: d_date
+      - name: paymentdate
+        tests:
+          - not_null
+          - relationships:
+              to: ref('ORGCALENDAR')
+              field: d_date
