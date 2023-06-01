@@ -142,3 +142,4 @@ sources:
           - name: PAYMENTAMOUNT
             tests:
               - not_null
+      - name: ratingmaster
