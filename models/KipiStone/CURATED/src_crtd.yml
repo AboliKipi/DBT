@@ -50,6 +50,7 @@ sources:
     database: PROD_DWH  
     schema: CURATED_SCHEMA 
     tables:
+      - name: CUSTOMERDETAILS
       - name: AR_DETAILS
         columns:
           - name: AS_OF_DATE
